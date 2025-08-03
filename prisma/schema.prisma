@@ -14,11 +14,14 @@ datasource db {
 }
 
 model Aluno {
-  id     Int   @id @default(autoincrement()) // Int obrigatório, chave primária
-  nome   String                              // String obrigatória
-  idade  Int?                                // Int opcional (pode ser null)
-  peso   Float                               // Float obrigatório
-  ativo  Boolean  @default(true)             // Boolean obrigatório com valor padrão
-  criadoEm DateTime @default(now())          // Data automática
+  id        Int      @id @default(autoincrement())
+  nome      String
+  sobrenome String
+  email     String   @unique
+  idade     Int?
+  peso      Float
+  ativo     Boolean  @default(true)
+  criadoEm  DateTime @default(now())
 }
+
 

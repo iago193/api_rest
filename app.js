@@ -18,14 +18,14 @@ class App {
   async criarAluno() {
     const novoAluno = await prisma.aluno.create({
       data: {
-        nome: 'João',       // String obrigatória
-        peso: 70.5,         // Float obrigatório
-        // idade é opcional
-        // ativo é automático (default: true)
-        // criadoEm é automático (default: now())
-      }
+        nome: 'João',
+        sobrenome: 'Silva',
+        email: 'joao.silva@example.com',
+        peso: 70.5,
+        idade: 20,
+      },
     });
-    console.log(novoAluno);
+    console.log('Aluno criado:', novoAluno);
   }
 
   middlewares() {
