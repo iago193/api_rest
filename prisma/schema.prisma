@@ -24,4 +24,12 @@ model Aluno {
   criadoEm  DateTime @default(now())
 }
 
+model Users {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  email     String   @unique
+  password_hash      String
+  criadoEm  DateTime @default(now())
+}
+
 

@@ -1,9 +1,9 @@
 import { Router } from "express";
-import homeControllers from "../controllers/homeControllers.js";
+import alunoControllers from "../controllers/alunoControllers.js";
 
 const router = new Router();
 
-router.get('/', homeControllers.index);
+router.post('/create', alunoControllers.alunoCreate);
 
 export default router;
 
