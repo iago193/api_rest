@@ -2,7 +2,7 @@ import Aluno from "../models/alunoModel.js";
 
 class AlunoControllers {
 
-  async alunoCreate(req, res) {
+  async create(req, res) {
     try {
       const aluno = new Aluno(req.body);
       await aluno.createAluno();    

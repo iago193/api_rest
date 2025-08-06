@@ -22,7 +22,7 @@ class TokenControllers {
             );
 
 
-            return res.json({ success: true, data: token });
+            return res.json({ success: true, token: token });
         } catch (error) {
             return res.status(401).json({ success: false, error: error.message });
         }

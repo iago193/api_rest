@@ -2,7 +2,7 @@ import User from "../models/userModel.js";
 
 class UserControllers {
   // Criar usuário
-  async userCreate(req, res) {
+  async create(req, res) {
     try {
       const users = await User.createUser(req.body);
       return res.json({ success: true, data: users });
@@ -24,7 +24,7 @@ class UserControllers {
   // Mostrar usuário por ID
   async show(req, res) {
     try {
-      const user = await User.show({ id: req.params.id });
+      const user = await User.show({ id: req.userId });
       return res.json({ success: true, data: user });
     } catch (error) {
       return res.status(404).json({ success: false, error: error.message });
@@ -34,7 +34,7 @@ class UserControllers {
   // Atualizar usuário por ID
   async update(req, res) {
     try {
-      const user = await User.update(req.params.id, req.body);
+      const user = await User.update(req.userId, req.body);
       return res.json({ success: true, data: user });
     } catch (error) {
       return res.status(404).json({ success: false, error: error.message });
@@ -44,7 +44,7 @@ class UserControllers {
   // Deletar usuário por ID
   async delete(req, res) {
     try {
-      await User.delete(req.params.id);
+      await User.delete(req.userId);
       return res.json({ success: true, message: 'Usuário deletado com sucesso' });
     } catch (error) {
       return res.status(404).json({ success: false, error: error.message });

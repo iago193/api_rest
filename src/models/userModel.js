@@ -3,7 +3,55 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-class User {
+class Token {
+
+    static async autenticar({ email, senha }) {
+        if (!email || !senha) {
+            throw new Error('E-mail e senha são obrigatórios');
+        }
+
+        const emailLimpo = email.toLowerCase().trim();
+
+        const usuario = await prisma.users.findUnique({
+            where: { email: emailLimpo },
+            select: {
+                id: true,
+                nome: true,
+                email: true,
+                password_hash: true
+            }
+        });
+
+
+        if (!usuario) {
+            throw new Error('Usuário não encontrado');
+        }
+
+        const senhaCorreta = await bcrypt.compare(senha, usuario.password_hash);
+
+        if (!senhaCorreta) {
+            throw new Error('Senha incorreta');
+        }
+
+        // Remove o hash da senha ao retornar os dados
+        const { password_hash, ...userData } = usuario;
+        return userData;
+    }
+
+    static async findById(id) {
+        return prisma.users.findUnique({
+            where: { id: Number(id) },
+            select: {
+                id: true,
+                email: true,
+                nome: true
+            }
+        });
+    }
+
+}
+
+class User extends Token {
 
     static validarId(id) {
         if (!id || isNaN(id)) throw new Error('ID inválido');
@@ -29,8 +77,14 @@ class User {
         const idNum = User.validarId(id);
 
         const user = await prisma.users.findUnique({
-            where: { id: idNum }
+            where: { id: idNum },
+            select: {
+                id: true,
+                nome: true,
+                email: true
+            }
         });
+
 
         if (!user) throw new Error('Usuário não encontrado');
         return user;
@@ -46,7 +100,6 @@ class User {
         if (!userExists) throw new Error('Usuário não encontrado');
 
         if (data.email) {
-
             const emailExiste = await prisma.users.findFirst({
                 where: {
                     email: data.email.toLowerCase().trim(),
@@ -60,9 +113,15 @@ class User {
 
         return prisma.users.update({
             where: { id: idNum },
-            data: dadosAtualizados
+            data: dadosAtualizados,
+            select: {
+                id: true,
+                nome: true,
+                email: true
+            }
         });
     }
+
 
     static async delete(id) {
         const idNum = User.validarId(id);
@@ -128,39 +187,6 @@ class User {
         if (senha) dados.password_hash = await bcrypt.hash(senha, 10);
 
         return dados;
-    }
-
-    static async autenticar({ email, senha }) {
-        if (!email || !senha) {
-            throw new Error('E-mail e senha são obrigatórios');
-        }
-
-        const emailLimpo = email.toLowerCase().trim();
-
-        const usuario = await prisma.users.findUnique({
-            where: { email: emailLimpo },
-            select: {
-                id: true,
-                nome: true,
-                email: true,
-                password_hash: true
-            }
-        });
-
-
-        if (!usuario) {
-            throw new Error('Usuário não encontrado');
-        }
-
-        const senhaCorreta = await bcrypt.compare(senha, usuario.password_hash);
-
-        if (!senhaCorreta) {
-            throw new Error('Senha incorreta');
-        }
-
-        // Remove o hash da senha ao retornar os dados
-        const { password_hash, ...userData } = usuario;
-        return userData;
     }
 
 }

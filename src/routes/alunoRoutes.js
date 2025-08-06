@@ -3,7 +3,7 @@ import alunoControllers from "../controllers/alunoControllers.js";
 
 const router = new Router();
 
-router.post('/create', alunoControllers.alunoCreate);
+router.post('/create', alunoControllers.create);
 
 export default router;
 
