@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import User from "../models/userModel.js";
+import Token from "../models/tokenModel.js";
 
 export default async (req, res, next) => {
     const { authorization } = req.headers;
@@ -14,9 +14,9 @@ export default async (req, res, next) => {
         const dados = jwt.verify(token, process.env.TOKEN_SECRET);
         const { id, email } = dados;
 
-        const user = await User.findById(id);
+        const tokenUser = await Token.findById(id);
 
-        if (!user || user.email !== email) {
+        if (!tokenUser || tokenUser.email !== email) {
             return res.status(401).json({ success: false, error: 'Credenciais inválidas ou modificadas.' });
         }
 

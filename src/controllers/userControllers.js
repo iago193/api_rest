@@ -1,7 +1,7 @@
 import User from "../models/userModel.js";
 
 class UserControllers {
-  // Criar usuário
+
   async create(req, res) {
     try {
       const users = await User.createUser(req.body);
@@ -11,7 +11,7 @@ class UserControllers {
     }
   }
 
-  // Listar todos usuários
+
   async index(req, res) {
     try {
       const users = await User.getUser();
@@ -21,7 +21,7 @@ class UserControllers {
     }
   }
 
-  // Mostrar usuário por ID
+
   async show(req, res) {
     try {
       const user = await User.show({ id: req.userId });
@@ -31,7 +31,7 @@ class UserControllers {
     }
   }
 
-  // Atualizar usuário por ID
+
   async update(req, res) {
     try {
       const user = await User.update(req.userId, req.body);
@@ -41,7 +41,7 @@ class UserControllers {
     }
   }
 
-  // Deletar usuário por ID
+
   async delete(req, res) {
     try {
       await User.delete(req.userId);

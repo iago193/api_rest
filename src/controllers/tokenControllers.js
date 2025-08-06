@@ -1,19 +1,19 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import User from "../models/userModel.js";
+import Token from "../models/tokenModel.js";
 import jwt from "jsonwebtoken";
 
 class TokenControllers {
     async store(req, res) {
         try {
             const { email = '', password = '', } = req.body;
-            const user = await User.autenticar({ email, senha: password });
+            const tokenUser = await Token.autenticar({ email, senha: password });
 
             const token = jwt.sign(
                 {
-                    id: user.id,
-                    email: user.email,
+                    id: tokenUser.id,
+                    email: tokenUser.email,
                 },
                 process.env.TOKEN_SECRET,
                 {
