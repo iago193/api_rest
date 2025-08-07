@@ -1,8 +1,10 @@
 import express from "express";
+
 import homeRoutes from './src/routes/homeRoutes.js';
 import alunoRoutes from './src/routes/alunoRoutes.js';
 import userRoutes from './src/routes/userRoutes.js';
 import tokenRoutes from './src/routes/tokenRoutes.js';
+import uploadRoutes from './src/routes/uploadRoutes.js';
 
 
 class App {
@@ -20,6 +22,7 @@ class App {
   routes() {
     this.app.use('/', homeRoutes);
     this.app.use('/aluno', alunoRoutes);
+    this.app.use('/uploads', uploadRoutes);
     this.app.use('/user', userRoutes);
     this.app.use('/token', tokenRoutes);
   }

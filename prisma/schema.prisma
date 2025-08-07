@@ -14,15 +14,27 @@ datasource db {
 }
 
 model Aluno {
-  id        Int      @id @default(autoincrement())
-  nome      String
-  sobrenome String
-  email     String   @unique
-  idade     Int?
-  peso      Float
-  ativo     Boolean  @default(true)
-  criadoEm  DateTime @default(now())
+  id         Int      @id @default(autoincrement())
+  nome       String
+  sobrenome  String
+  email      String   @unique
+  idade      Int?
+  peso       Float
+  ativo      Boolean  @default(true)
+  criadoEm   DateTime @default(now())
+
+  imagem     Imagem?  @relation(fields: [imagemId], references: [id], onDelete: Cascade)
+  imagemId   Int?     @unique
 }
+
+model Imagem {
+  id       Int     @id @default(autoincrement())
+  nome     String
+  caminho  String
+
+  aluno    Aluno?
+}
+
 
 model Users {
   id        Int      @id @default(autoincrement())
