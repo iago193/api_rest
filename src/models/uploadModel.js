@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 class Upload {
 
     static async create(filename, alunoId) {
-        console.log(alunoId);
         const aluno = await prisma.aluno.findUnique({
             where: { id: alunoId },
             include: { imagem: true }
@@ -14,8 +13,14 @@ class Upload {
         if (!aluno) throw new Error('Aluno não encontrado.');
 
         if (aluno.imagem) {
+ 
+            await prisma.aluno.update({
+                where: { id: alunoId },
+                data: { imagemId: null }
+            });
+
             await prisma.imagem.delete({
-                where: { id: aluno.imagem.id },
+                where: { id: aluno.imagem.id }
             });
         }
 
@@ -23,9 +28,7 @@ class Upload {
             data: {
                 nome: filename,
                 caminho: `/uploads/${filename}`,
-                aluno: {
-                    connect: { id: alunoId }
-                }
+                aluno: { connect: { id: alunoId } }
             }
         });
 
@@ -36,6 +39,7 @@ class Upload {
 
         return novaImagem;
     }
+
 
 }
 
