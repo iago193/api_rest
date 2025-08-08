@@ -22,7 +22,13 @@ class Aluno {
             select: {
                 id: true,
                 nome: true,
-                email: true
+                email: true,
+                imagem: {
+                    select: {
+                        nome: true,
+                        caminho: true
+                    }
+                }
             }
         });
 

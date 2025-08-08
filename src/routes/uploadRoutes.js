@@ -5,6 +5,6 @@ import uploadControllers from "../controllers/uploadControllers.js";
 
 const router = new Router();
 
-router.post('/',loginRequired, uploadControllers.store);
+router.post('/:id',loginRequired, uploadControllers.store);
 
 export default router;
