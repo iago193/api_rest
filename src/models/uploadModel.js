@@ -1,4 +1,6 @@
 import { PrismaClient } from '@prisma/client';
+import fs from 'fs';
+import path from 'path';
 
 const prisma = new PrismaClient();
 
@@ -13,7 +15,13 @@ class Upload {
         if (!aluno) throw new Error('Aluno não encontrado.');
 
         if (aluno.imagem) {
- 
+
+            const imagePath = path.resolve('uploads', aluno.imagem.nome);
+
+            if (fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);
+            }
+
             await prisma.aluno.update({
                 where: { id: alunoId },
                 data: { imagemId: null }
@@ -23,6 +31,7 @@ class Upload {
                 where: { id: aluno.imagem.id }
             });
         }
+
 
         const novaImagem = await prisma.imagem.create({
             data: {
