@@ -1,12 +1,12 @@
-import Aluno from "../models/alunoModel.js";
+import Student from "../models/studentModel.js";
 
-class AlunoControllers {
+class StudentControllers {
 
   async index(req, res) {
     try {
-      const aluno = await Aluno.index();
+      const student = await Student.index();
 
-      return res.json({ success: true, data: aluno });
+      return res.json({ success: true, data: student });
     } catch (error) {
       return res.status(404).json({ success: false, error: error.message });
     }
@@ -14,9 +14,9 @@ class AlunoControllers {
 
   async create(req, res) {
     try {
-      const aluno = await Aluno.create(req.body);
+      const student = await Student.create(req.body);
 
-      return res.json({ success: true, data: aluno });
+      return res.json({ success: true, data: student });
     } catch (error) {
       return res.status(400).json({ success: false, error: error.message });
     }
@@ -25,9 +25,9 @@ class AlunoControllers {
   async show(req, res) {
     try {
       const { id } = req.params;
-      const aluno = await Aluno.show({ id: Number(id) });
+      const student = await Student.show({ id: Number(id) });
 
-      return res.json({ success: true, data: aluno });
+      return res.json({ success: true, data: student });
     } catch (error) {
       return res.status(404).json({ success: false, error: error.message });
     }
@@ -36,9 +36,9 @@ class AlunoControllers {
   async update(req, res) {
     try {
       const { id } = req.params;
-      const aluno = await Aluno.update(id, req.body);
+      const student = await Student.update(id, req.body);
 
-      return res.json({ success: true, data: aluno });
+      return res.json({ success: true, data: student });
     } catch (error) {
       return res.status(500).json({ success: false, error: error.message });
     }
@@ -47,12 +47,12 @@ class AlunoControllers {
   async delete(req, res) {
     try {
       const { id } = req.params;
-      const aluno = await Aluno.delete(Number(id));
+      const student = await Student.delete(Number(id));
 
       return res.json({
         success: true,
-        message: `Aluno '${aluno.nome}' deletado com sucesso.`,
-        data: aluno
+        message: `student '${student.nome}' deletado com sucesso.`,
+        data: student
       });
 
     } catch (error) {
@@ -65,4 +65,4 @@ class AlunoControllers {
 
 }
 
-export default new AlunoControllers();
+export default new StudentControllers();

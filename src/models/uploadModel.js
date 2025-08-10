@@ -6,29 +6,29 @@ const prisma = new PrismaClient();
 
 class Upload {
 
-    static async create(filename, alunoId) {
-        const aluno = await prisma.aluno.findUnique({
-            where: { id: alunoId },
+    static async create(filename, studentId) {
+        const student = await prisma.student.findUnique({
+            where: { id: studentId },
             include: { imagem: true }
         });
 
-        if (!aluno) throw new Error('Aluno não encontrado.');
+        if (!student) throw new Error('Aluno não encontrado.');
 
-        if (aluno.imagem) {
+        if (student.imagem) {
 
-            const imagePath = path.resolve('uploads', aluno.imagem.nome);
+            const imagePath = path.resolve('uploads','images', student.imagem.nome);
 
             if (fs.existsSync(imagePath)) {
                 fs.unlinkSync(imagePath);
             }
 
-            await prisma.aluno.update({
-                where: { id: alunoId },
+            await prisma.student.update({
+                where: { id: studentId },
                 data: { imagemId: null }
             });
 
             await prisma.imagem.delete({
-                where: { id: aluno.imagem.id }
+                where: { id: student.imagem.id }
             });
         }
 
@@ -36,13 +36,13 @@ class Upload {
         const novaImagem = await prisma.imagem.create({
             data: {
                 nome: filename,
-                caminho: `/uploads/${filename}`,
-                aluno: { connect: { id: alunoId } }
+                caminho: `/uploads/images/${filename}`,
+                student: { connect: { id: studentId } }
             }
         });
 
-        await prisma.aluno.update({
-            where: { id: alunoId },
+        await prisma.student.update({
+            where: { id: studentId },
             data: { imagemId: novaImagem.id }
         });
 

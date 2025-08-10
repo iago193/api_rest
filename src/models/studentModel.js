@@ -5,7 +5,7 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-class Aluno {
+class Student {
 
     static validarId(id) {
         if (!id || isNaN(id)) throw new Error('ID inválido');
@@ -13,11 +13,11 @@ class Aluno {
     }
 
     static async index() {
-        return prisma.aluno.findMany();
+        return prisma.student.findMany();
     }
 
     static async show({ id }) {
-        const aluno = await prisma.aluno.findUnique({
+        const student = await prisma.student.findUnique({
             where: { id },
             select: {
                 id: true,
@@ -32,44 +32,53 @@ class Aluno {
             }
         });
 
-        if (!aluno) {
-            const erro = new Error('Aluno não encontrado.');
-            throw erro;
+        if (!student) {
+            throw new Error('student não encontrado.');
         }
 
-        return aluno;
+        if (student.imagem) {
+            student.imagem.caminho = `${process.env.BASE_URL}${student.imagem.caminho}`;
+        } else {
+            student.imagem = {
+                nome: 'default.png',
+                caminho: `${process.env.BASE_URL}/uploads/images/default.png`
+            };
+        }
+
+        return student;
     }
+
 
 
     static async update(id, body) {
         const emailNormalizado = body.email.toLowerCase().trim();
         const dadosPreparados = this.prepararDados({ ...body, email: emailNormalizado });
 
-        const idNum = Aluno.validarId(id);
+        const idNum = student.validarId(id);
 
-        const alunoAtual = await prisma.aluno.findUnique({
+        const studentAtual = await prisma.student.findUnique({
             where: { id: idNum }
         });
 
-        if (!alunoAtual) {
+        if (!studentAtual) {
             throw new Error('ID não encontrado.');
         }
 
-        // Verifica se o e-mail já está sendo usado por outro aluno
-        const emailExiste = await prisma.aluno.findUnique({
+        // Verifica se o e-mail já está sendo usado por outro student
+        const emailExiste = await prisma.student.findUnique({
             where: { email: emailNormalizado }
         });
 
         if (emailExiste && emailExiste.id !== idNum) {
-            throw new Error('E-mail já cadastrado para outro aluno.');
+            throw new Error('E-mail já cadastrado para outro student.');
         }
 
-        const alunoAtualizado = await prisma.aluno.update({
+        const studentAtualizado = await prisma.student.update({
             where: { id: idNum },
             data: dadosPreparados
         });
 
-        return alunoAtualizado;
+        return studentAtualizado;
     }
 
 
@@ -77,41 +86,41 @@ class Aluno {
         const emailNormalizado = body.email.toLowerCase().trim();
         const dadosPreparados = this.prepararDados({ ...body, email: emailNormalizado });
 
-        const emailExiste = await prisma.aluno.findUnique({
+        const emailExiste = await prisma.student.findUnique({
             where: { email: emailNormalizado }
         });
 
         if (emailExiste) {
-            const erro = new Error('E-mail já cadastrado para outro aluno.');
+            const erro = new Error('E-mail já cadastrado para outro student.');
             throw erro;
         }
 
-        const novoAluno = await prisma.aluno.create({
+        const novostudent = await prisma.student.create({
             data: dadosPreparados
         });
 
-        return novoAluno;
+        return novostudent;
     }
 
 
     static async delete(id) {
-        const idNum = Aluno.validarId(id);
+        const idNum = student.validarId(id);
 
-        const aluno = await prisma.aluno.findUnique({
+        const student = await prisma.student.findUnique({
             where: { id: idNum }
         });
 
-        if (!aluno) {
-            const erro = new Error('Aluno não encontrado.');
+        if (!student) {
+            const erro = new Error('student não encontrado.');
             erro.status = 404;
             throw erro;
         }
 
-        const alunoDeletado = await prisma.aluno.delete({
+        const studentDeletado = await prisma.student.delete({
             where: { id: idNum }
         });
 
-        return alunoDeletado;
+        return studentDeletado;
     }
 
 
@@ -145,4 +154,4 @@ class Aluno {
 
 }
 
-export default Aluno;
+export default Student;

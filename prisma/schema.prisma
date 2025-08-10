@@ -1,19 +1,13 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "mysql" // ou "postgresql", "sqlite" dependendo do seu banco
   url      = env("DATABASE_URL")
 }
 
-model Aluno {
+model Student {
   id         Int      @id @default(autoincrement())
   nome       String
   sobrenome  String
@@ -32,16 +26,13 @@ model Imagem {
   nome     String
   caminho  String
 
-  aluno    Aluno?
+  student  Student?
 }
-
 
 model Users {
-  id        Int      @id @default(autoincrement())
-  nome      String
-  email     String   @unique
-  password_hash      String
-  criadoEm  DateTime @default(now())
+  id            Int      @id @default(autoincrement())
+  nome          String
+  email         String   @unique
+  password_hash String
+  criadoEm      DateTime @default(now())
 }
-
-

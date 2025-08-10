@@ -27,7 +27,7 @@
 			"response": []
 		},
 		{
-			"name": "createAluno",
+			"name": "createstudent",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -62,14 +62,14 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:3000/aluno/create",
+					"raw": "http://localhost:3000/student/create",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"aluno",
+						"student",
 						"create"
 					]
 				}
