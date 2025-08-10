@@ -37,11 +37,11 @@ class Student {
         }
 
         if (student.imagem) {
-            student.imagem.caminho = `${process.env.BASE_URL}${student.imagem.caminho}`;
+            student.imagem.caminho = `${process.env.BASE_URL}:${process.env.BASE_PORT}${student.imagem.caminho}`;
         } else {
             student.imagem = {
                 nome: 'default.png',
-                caminho: `${process.env.BASE_URL}/public/uploads/images/default.png`
+                caminho: `${process.env.BASE_URL}:${process.env.BASE_PORT}/uploads/images/default.png`
             };
         }
 
