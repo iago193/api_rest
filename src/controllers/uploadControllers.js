@@ -2,7 +2,7 @@ import Upload from "../models/uploadModel.js";
 import multer from "multer";
 import multerConfig from "../config/multerConfig.js";
 
-const upload = multer(multerConfig).single('arquivoFoto');
+const upload = multer(multerConfig).single('foto');
 
 class UploadController {
   async store(req, res) {
