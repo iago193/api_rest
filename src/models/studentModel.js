@@ -33,7 +33,7 @@ class Student {
         });
 
         if (!student) {
-            throw new Error('student não encontrado.');
+            throw new Error('Aluno não encontrado.');
         }
 
         if (student.imagem) {
@@ -70,7 +70,7 @@ class Student {
         });
 
         if (emailExiste && emailExiste.id !== idNum) {
-            throw new Error('E-mail já cadastrado para outro student.');
+            throw new Error('E-mail já cadastrado para outro Aluno.');
         }
 
         const studentAtualizado = await prisma.student.update({
@@ -91,7 +91,7 @@ class Student {
         });
 
         if (emailExiste) {
-            const erro = new Error('E-mail já cadastrado para outro student.');
+            const erro = new Error('E-mail já cadastrado para outro aluno.');
             throw erro;
         }
 
@@ -111,7 +111,7 @@ class Student {
         });
 
         if (!student) {
-            const erro = new Error('student não encontrado.');
+            const erro = new Error('Aluno não encontrado.');
             erro.status = 404;
             throw erro;
         }
