@@ -16,7 +16,7 @@ class Upload {
 
         if (student.imagem) {
 
-            const imagePath = path.resolve('uploads','images', student.imagem.nome);
+            const imagePath = path.resolve('public','uploads','images', student.imagem.nome);
 
             if (fs.existsSync(imagePath)) {
                 fs.unlinkSync(imagePath);

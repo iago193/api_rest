@@ -41,7 +41,7 @@ class Student {
         } else {
             student.imagem = {
                 nome: 'default.png',
-                caminho: `${process.env.BASE_URL}/uploads/images/default.png`
+                caminho: `${process.env.BASE_URL}/public/uploads/images/default.png`
             };
         }
 
