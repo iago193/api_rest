@@ -1,3 +1,35 @@
+# 📌 API_REST
+
+## 📑 Mapa do Projeto
+1. [Visão Geral](#visão-geral)
+2. [Tecnologias](#tecnologias)
+3. [Estrutura do Projeto](#estrutura-do-projeto)
+4. [Instalação](#instalação)
+5. [Uso](#uso)
+6. [Contribuição](#contribuição)
+7. [Contato](#contato)
+
+---
+
+## Visão Geral
+API REST para gerenciamento escolar, com suporte a usuários, estudantes e upload de arquivos.  
+Permite autenticação, manipulação de dados via Prisma e integração com uploads de imagens.
+
+---
+
+## Tecnologias
+- Node.js  
+- Express.js  
+- Prisma  
+- MySQL / PostgreSQL (ou outro banco compatível)  
+- Multer (para uploads)  
+- Postman (para testes da API)  
+
+---
+
+## Estrutura do Projeto
+
+```text
 API_REST/
 │
 ├─ node_modules/                # Dependências do projeto
