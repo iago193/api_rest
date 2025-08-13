@@ -13,7 +13,7 @@ const __dirname = path.resolve();
 
 const whiteList = [
   'http://localhost:3000',
-  'https://iagobrunosilva.duckdns.org'
+  'https://iagobruno2.duckdns.org'
 ];
 
 const corsOptions = {
