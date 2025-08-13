@@ -7,9 +7,15 @@ import jwt from "jsonwebtoken";
 class TokenControllers {
     async store(req, res) {
         try {
-            const { email = '', password = '', } = req.body;
+            const { email = '', password = '' } = req.body;
+            
+            // Autentica o usuário
             const tokenUser = await Token.autenticar({ email, senha: password });
+            if (!tokenUser) {
+                throw new Error("Credenciais inválidas");
+            }
 
+            // Gera o token JWT
             const token = jwt.sign(
                 {
                     id: tokenUser.id,
@@ -21,8 +27,15 @@ class TokenControllers {
                 }
             );
 
+            // Retorna dados do usuário autenticado
+            return res.json({
+                success: true,
+                token,
+                nome: tokenUser.nome,
+                id: tokenUser.id,
+                email: tokenUser.email
+            });
 
-            return res.json({ success: true, token: token });
         } catch (error) {
             return res.status(401).json({ success: false, error: error.message });
         }
