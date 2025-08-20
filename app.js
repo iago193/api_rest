@@ -13,6 +13,7 @@ const __dirname = path.resolve();
 
 const whiteList = [
   'http://localhost:3000',
+  'http://localhost:5173', //padrão de rota do react
   'https://iagobruno2.duckdns.org'
 ];
 
