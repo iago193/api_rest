@@ -54,7 +54,7 @@ class Student {
         const emailNormalizado = body.email.toLowerCase().trim();
         const dadosPreparados = this.prepararDados({ ...body, email: emailNormalizado });
 
-        const idNum = student.validarId(id);
+        const idNum = this.validarId(id);
 
         const studentAtual = await prisma.student.findUnique({
             where: { id: idNum }
