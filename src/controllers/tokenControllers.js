@@ -20,6 +20,7 @@ class TokenControllers {
                 {
                     id: tokenUser.id,
                     email: tokenUser.email,
+                    nome: tokenUser.nome,
                 },
                 process.env.TOKEN_SECRET,
                 {
