@@ -24,7 +24,7 @@ class UserControllers {
 
   async show(req, res) {
     try {
-      const user = await User.show({ id: req.userId });
+      const user = await User.show({ id: req.params.id });
       return res.json({ success: true, data: user });
     } catch (error) {
       return res.status(404).json({ success: false, error: error.message });
